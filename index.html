@@ -6,27 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#1a1a2e">
+<meta name="theme-color" content="#1b2a4a">
 <title>購物紀錄</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23ff7a00'/%3E%3Ctext x='90' y='115' font-size='90' text-anchor='middle'%3E🛒%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0f0f1a;
-  --surface: #1a1a2e;
-  --surface2: #222240;
-  --surface3: #2a2a4a;
-  --border: #333360;
-  --ink: #e8e8f5;
-  --ink2: #9999bb;
-  --ink3: #5555888;
-  --accent: #7c6cf8;
-  --accent2: #a78bfa;
-  --red: #f87171;
-  --green: #4ade80;
-  --gold: #fbbf24;
-  --pink: #f472b6;
-  --cyan: #22d3ee;
-  --orange: #fb923c;
+  --bg: #1b2a4a;
+  --bg2: #162240;
+  --surface: #243558;
+  --surface2: #2d4068;
+  --surface3: #374d78;
+  --border: #3a5080;
+  --ink: #f5ede0;
+  --ink2: #c4aa8a;
+  --ink3: #8a7560;
+  --accent: #ff7a00;
+  --accent2: #ffaa44;
+  --milk: #f5ede0;
+  --milk2: #e8d5b8;
+  --milk3: #d4b896;
+  --red: #ff6b6b;
+  --green: #4ecb8d;
+  --gold: #ffba44;
+  --pink: #ff8fa3;
+  --cyan: #4ecdc4;
   --radius: 18px;
   --tab-h: 68px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -42,24 +46,31 @@ body {
   position: relative;
 }
 
-/* ── App Shell ── */
+/* ── Header ── */
 .app-header {
-background: var(–surface);
+background: var(–bg2);
 padding: 52px 20px 16px;
 border-bottom: 1px solid var(–border);
 flex-shrink: 0;
 position: relative;
 z-index: 10;
 }
+.header-row { display: flex; align-items: center; justify-content: space-between; }
 .app-header h1 {
 font-family: ‘Noto Serif TC’, serif;
-font-size: 1.3rem; font-weight: 700;
-background: linear-gradient(135deg, var(–accent2), var(–cyan));
--webkit-background-clip: text; -webkit-text-fill-color: transparent;
-background-clip: text;
+font-size: 1.35rem; font-weight: 700;
+color: var(–milk);
+display: flex; align-items: center; gap: 8px;
 }
-.app-header .date-line { font-size: 0.72rem; color: var(–ink2); margin-top: 2px; letter-spacing: 0.06em; }
+.app-header h1 span.logo {
+background: var(–accent);
+width: 32px; height: 32px; border-radius: 9px;
+display: inline-flex; align-items: center; justify-content: center;
+font-size: 1rem;
+}
+.app-header .date-line { font-size: 0.7rem; color: var(–ink2); margin-top: 4px; letter-spacing: 0.06em; }
 
+/* ── Scroll ── */
 .scroll-area {
 flex: 1; overflow-y: auto; overflow-x: hidden;
 -webkit-overflow-scrolling: touch;
@@ -73,171 +84,166 @@ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
 width: 100%; max-width: 430px;
 height: calc(var(–tab-h) + var(–safe-bottom));
 padding-bottom: var(–safe-bottom);
-background: var(–surface);
+background: var(–bg2);
 border-top: 1px solid var(–border);
 display: flex; z-index: 50;
-backdrop-filter: blur(12px);
 }
 .tab-item {
 flex: 1; display: flex; flex-direction: column;
 align-items: center; justify-content: center; gap: 4px;
-cursor: pointer; transition: all 0.2s;
-color: var(–ink2); font-size: 0.62rem; font-weight: 500;
-letter-spacing: 0.04em; padding-top: 8px;
-border: none; background: transparent;
+cursor: pointer; color: var(–ink3);
+font-size: 0.62rem; font-weight: 500; letter-spacing: 0.04em;
+padding-top: 8px; border: none; background: transparent;
+transition: color 0.2s;
 }
 .tab-item .icon { font-size: 1.4rem; transition: transform 0.2s; }
-.tab-item.active { color: var(–accent2); }
+.tab-item.active { color: var(–accent); }
 .tab-item.active .icon { transform: scale(1.15); }
 
 /* ── FAB ── */
 .fab {
 position: fixed;
 bottom: calc(var(–tab-h) + var(–safe-bottom) + 16px);
-right: 20px; left: auto;
+right: 20px;
 width: 56px; height: 56px; border-radius: 50%;
-background: linear-gradient(135deg, var(–accent), var(–pink));
-border: none; cursor: pointer; font-size: 1.6rem; color: #fff;
-box-shadow: 0 4px 20px rgba(124,108,248,0.5);
+background: var(–accent);
+border: none; cursor: pointer; font-size: 1.7rem; color: #fff;
+box-shadow: 0 4px 20px rgba(255,122,0,0.45);
 display: flex; align-items: center; justify-content: center;
 z-index: 40; transition: transform 0.18s, box-shadow 0.18s;
-max-width: calc(430px - 20px);
 }
-.fab:active { transform: scale(0.93); box-shadow: 0 2px 10px rgba(124,108,248,0.4); }
+.fab:active { transform: scale(0.93); }
 
 /* ── Pages ── */
 .page { display: none; padding: 16px; }
 .page.active { display: block; }
 
-/* ── Stats Cards ── */
+/* ── Stats ── */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 .stat-card {
-background: var(–surface2); border-radius: 16px;
+background: var(–surface); border-radius: 16px;
 padding: 16px; border: 1px solid var(–border);
 position: relative; overflow: hidden;
 }
-.stat-card::before {
-content: ‘’; position: absolute; top: -20px; right: -20px;
-width: 60px; height: 60px; border-radius: 50%;
-background: currentColor; opacity: 0.08;
+.stat-card::after {
+content: ‘’; position: absolute;
+bottom: -16px; right: -16px;
+width: 56px; height: 56px; border-radius: 50%;
+background: currentColor; opacity: 0.07;
 }
-.stat-card .s-label { font-size: 0.65rem; color: var(–ink2); letter-spacing: 0.1em; margin-bottom: 6px; }
-.stat-card .s-val { font-family: ‘Noto Serif TC’, serif; font-size: 1.4rem; font-weight: 700; }
+.stat-card .s-label { font-size: 0.65rem; color: var(–ink2); letter-spacing: 0.1em; margin-bottom: 6px; text-transform: uppercase; }
+.stat-card .s-val { font-family: ‘Noto Serif TC’, serif; font-size: 1.45rem; font-weight: 700; }
 .stat-card .s-sub { font-size: 0.65rem; color: var(–ink2); margin-top: 3px; }
-.stat-card.c1 { color: var(–accent2); }
-.stat-card.c2 { color: var(–gold); }
+.stat-card.c1 { color: var(–milk); }
+.stat-card.c2 { color: var(–accent2); }
 .stat-card.c3 { color: var(–red); }
 .stat-card.c4 { color: var(–green); }
 
-/* ── Section header ── */
-.sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.sec-title { font-size: 0.8rem; font-weight: 600; color: var(–ink2); letter-spacing: 0.1em; text-transform: uppercase; }
-.sec-action { font-size: 0.72rem; color: var(–accent2); cursor: pointer; }
-
-/* ── Item Cards ── */
-.item-card {
-background: var(–surface2); border-radius: 16px;
-padding: 14px 16px; margin-bottom: 10px;
-border: 1px solid var(–border);
-display: flex; align-items: center; gap: 12px;
-transition: background 0.15s;
-cursor: pointer; -webkit-user-select: none; user-select: none;
-}
-.item-card:active { background: var(–surface3); }
-.item-icon {
-width: 44px; height: 44px; border-radius: 12px;
-display: flex; align-items: center; justify-content: center;
-font-size: 1.3rem; flex-shrink: 0;
-background: var(–surface3);
-}
-.item-body { flex: 1; min-width: 0; }
-.item-name { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.item-meta { font-size: 0.7rem; color: var(–ink2); margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; }
-.item-right { text-align: right; flex-shrink: 0; }
-.item-price { font-family: ‘Noto Serif TC’, serif; font-size: 1rem; font-weight: 700; color: var(–gold); }
-.item-date { font-size: 0.65rem; color: var(–ink2); margin-top: 3px; }
-.restock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(–red); display: inline-block; margin-right: 3px; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-
-/* Badge */
-.badge {
-display: inline-block; padding: 2px 8px; border-radius: 20px;
-font-size: 0.62rem; font-weight: 600;
-}
-.b-良好 { background: #052e16; color: #4ade80; }
-.b-使用中 { background: #0c1a4a; color: #60a5fa; }
-.b-老舊 { background: #2d1a00; color: #fbbf24; }
-.b-已損壞 { background: #2d0a0a; color: #f87171; }
-.b-備用 { background: #1a1a2e; color: #9999bb; border: 1px solid var(–border); }
-
-/* ── Search / Filter bar ── */
+/* ── Filter bar ── */
 .filter-bar { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; }
 .filter-bar::-webkit-scrollbar { display: none; }
 .search-box {
-flex: 1; min-width: 160px;
-background: var(–surface2); border: 1.5px solid var(–border);
+flex: 1; min-width: 140px;
+background: var(–surface); border: 1.5px solid var(–border);
 border-radius: 12px; padding: 10px 14px;
 color: var(–ink); font-family: ‘Noto Sans TC’, sans-serif;
 font-size: 0.85rem; outline: none;
-transition: border-color 0.18s;
 }
+.search-box::placeholder { color: var(–ink3); }
 .search-box:focus { border-color: var(–accent); }
 .filter-chip {
-flex-shrink: 0; padding: 10px 14px;
-background: var(–surface2); border: 1.5px solid var(–border);
-border-radius: 12px; font-size: 0.78rem; color: var(–ink2);
-cursor: pointer; white-space: nowrap; font-family: ‘Noto Sans TC’, sans-serif;
-outline: none; transition: all 0.15s;
+flex-shrink: 0; padding: 10px 12px;
+background: var(–surface); border: 1.5px solid var(–border);
+border-radius: 12px; font-size: 0.75rem; color: var(–ink2);
+cursor: pointer; white-space: nowrap;
+font-family: ‘Noto Sans TC’, sans-serif; outline: none;
+-webkit-appearance: none;
 }
-.filter-chip.active { background: var(–accent); border-color: var(–accent); color: #fff; }
+.filter-chip:focus { border-color: var(–accent); }
 
-/* ── Monthly Stats ── */
+/* ── Item Cards ── */
+.item-card {
+background: var(–surface); border-radius: 16px;
+padding: 14px 16px; margin-bottom: 10px;
+border: 1px solid var(–border);
+display: flex; align-items: center; gap: 12px;
+transition: background 0.15s; cursor: pointer;
+}
+.item-card:active { background: var(–surface2); }
+.item-icon {
+width: 46px; height: 46px; border-radius: 13px;
+display: flex; align-items: center; justify-content: center;
+font-size: 1.35rem; flex-shrink: 0;
+background: var(–surface2);
+}
+.item-body { flex: 1; min-width: 0; }
+.item-name { font-size: 0.92rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(–milk); }
+.item-meta { font-size: 0.7rem; color: var(–ink2); margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.item-right { text-align: right; flex-shrink: 0; }
+.item-price { font-family: ‘Noto Serif TC’, serif; font-size: 1rem; font-weight: 700; color: var(–accent2); }
+.item-date { font-size: 0.65rem; color: var(–ink2); margin-top: 3px; }
+.restock-dot { width: 7px; height: 7px; border-radius: 50%; background: var(–red); display: inline-block; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── Badge ── */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.62rem; font-weight: 600; }
+.b-良好 { background: rgba(78,203,141,0.15); color: #4ecb8d; }
+.b-使用中 { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+.b-老舊 { background: rgba(255,186,68,0.15); color: #ffba44; }
+.b-已損壞 { background: rgba(255,107,107,0.15); color: #ff6b6b; }
+.b-備用 { background: rgba(196,170,138,0.15); color: var(–ink2); }
+
+/* ── Empty ── */
+.empty-state { text-align: center; padding: 50px 20px; color: var(–ink2); }
+.empty-state .ei { font-size: 3rem; margin-bottom: 12px; }
+
+/* ── Month selector ── */
 .month-selector {
 display: flex; align-items: center; justify-content: space-between;
-background: var(–surface2); border-radius: 14px; padding: 12px 16px;
+background: var(–surface); border-radius: 16px; padding: 14px 16px;
 margin-bottom: 16px; border: 1px solid var(–border);
 }
-.month-nav { background: none; border: none; color: var(–accent2); font-size: 1.4rem; cursor: pointer; padding: 4px 10px; border-radius: 8px; }
-.month-nav:active { background: var(–surface3); }
-.month-label { font-family: ‘Noto Serif TC’, serif; font-size: 1rem; font-weight: 700; }
-.month-total { font-size: 0.72rem; color: var(–ink2); text-align: center; }
-.month-total span { color: var(–gold); font-weight: 700; font-size: 0.85rem; }
+.month-nav { background: none; border: none; color: var(–accent); font-size: 1.5rem; cursor: pointer; padding: 4px 12px; border-radius: 8px; }
+.month-nav:active { background: var(–surface2); }
+.month-label { font-family: ‘Noto Serif TC’, serif; font-size: 1.05rem; font-weight: 700; color: var(–milk); }
+.month-total { font-size: 0.7rem; color: var(–ink2); text-align: center; margin-top: 2px; }
+.month-total span { color: var(–accent2); font-weight: 700; font-size: 0.85rem; }
 
-/* ── Donut Chart ── */
+/* ── Chart ── */
 .chart-wrap {
-background: var(–surface2); border-radius: 20px;
-padding: 20px; margin-bottom: 16px;
-border: 1px solid var(–border);
+background: var(–surface); border-radius: 20px;
+padding: 20px; margin-bottom: 16px; border: 1px solid var(–border);
 }
-.chart-title { font-size: 0.75rem; color: var(–ink2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+.chart-title { font-size: 0.72rem; color: var(–ink2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
 .donut-container { position: relative; width: 180px; height: 180px; margin: 0 auto 20px; }
 .donut-container svg { transform: rotate(-90deg); }
 .donut-center {
-position: absolute; inset: 0; display: flex; flex-direction: column;
-align-items: center; justify-content: center; pointer-events: none;
+position: absolute; inset: 0;
+display: flex; flex-direction: column; align-items: center; justify-content: center;
+pointer-events: none;
 }
-.donut-center .dc-val { font-family: ‘Noto Serif TC’, serif; font-size: 1.3rem; font-weight: 700; color: var(–ink); }
+.donut-center .dc-val { font-family: ‘Noto Serif TC’, serif; font-size: 1.3rem; font-weight: 700; color: var(–milk); }
 .donut-center .dc-lbl { font-size: 0.62rem; color: var(–ink2); margin-top: 2px; }
-.legend { display: flex; flex-direction: column; gap: 8px; }
-.legend-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.legend { display: flex; flex-direction: column; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 10px; }
 .legend-dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
-.legend-name { flex: 1; font-size: 0.8rem; }
-.legend-pct { font-size: 0.78rem; color: var(–ink2); font-weight: 600; }
-.legend-amt { font-family: ‘Noto Serif TC’, serif; font-size: 0.82rem; color: var(–gold); font-weight: 700; }
+.legend-name { flex: 1; font-size: 0.8rem; color: var(–ink); }
+.legend-pct { font-size: 0.75rem; color: var(–ink2); font-weight: 600; min-width: 36px; text-align: right; }
+.legend-amt { font-family: ‘Noto Serif TC’, serif; font-size: 0.82rem; color: var(–accent2); font-weight: 700; min-width: 64px; text-align: right; }
 
-/* ── Category breakdown ── */
+/* ── Cat breakdown ── */
 .cat-breakdown { display: flex; flex-direction: column; gap: 8px; }
-.cat-row { background: var(–surface2); border-radius: 14px; padding: 12px 14px; border: 1px solid var(–border); }
-.cat-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.cat-row-name { font-size: 0.83rem; font-weight: 600; }
-.cat-row-amt { font-family: ‘Noto Serif TC’, serif; font-size: 0.85rem; color: var(–gold); }
+.cat-row { background: var(–surface); border-radius: 14px; padding: 13px 15px; border: 1px solid var(–border); }
+.cat-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.cat-row-name { font-size: 0.85rem; font-weight: 600; color: var(–milk); }
+.cat-row-amt { font-family: ‘Noto Serif TC’, serif; font-size: 0.88rem; color: var(–accent2); }
 .progress-bar { height: 6px; background: var(–surface3); border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
 .cat-row-pct { font-size: 0.68rem; color: var(–ink2); margin-top: 4px; text-align: right; }
 
-/* ── Modal ── */
+/* ── Sheet ── */
 .sheet-bg {
-position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+position: fixed; inset: 0; background: rgba(15,20,35,0.7);
 z-index: 200; display: flex; align-items: flex-end;
 opacity: 0; pointer-events: none; transition: opacity 0.25s;
 }
@@ -251,21 +257,27 @@ transform: translateY(100%); transition: transform 0.28s cubic-bezier(.4,0,.2,1)
 }
 .sheet-bg.open .sheet { transform: translateY(0); }
 .sheet-handle { width: 40px; height: 4px; background: var(–border); border-radius: 2px; margin: 14px auto 20px; }
-.sheet h2 { font-family: ‘Noto Serif TC’, serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+.sheet h2 { font-family: ‘Noto Serif TC’, serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: var(–milk); }
+
+/* ── Form ── */
 .form-group { margin-bottom: 14px; }
-.form-group label { display: block; font-size: 0.7rem; color: var(–ink2); letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+.form-group label { display: block; font-size: 0.68rem; color: var(–ink2); letter-spacing: 0.1em; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 .form-group input, .form-group select, .form-group textarea {
 width: 100%; padding: 13px 14px;
 background: var(–surface2); border: 1.5px solid var(–border);
-border-radius: 12px; color: var(–ink);
+border-radius: 12px; color: var(–milk);
 font-family: ‘Noto Sans TC’, sans-serif; font-size: 0.9rem;
-outline: none; transition: border-color 0.18s;
--webkit-appearance: none;
+outline: none; transition: border-color 0.18s; -webkit-appearance: none;
 }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(–ink3); }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(–accent); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.toggle-row { display: flex; align-items: center; justify-content: space-between; background: var(–surface2); border-radius: 12px; padding: 14px; border: 1.5px solid var(–border); }
-.toggle-label { font-size: 0.85rem; }
+.toggle-row {
+display: flex; align-items: center; justify-content: space-between;
+background: var(–surface2); border-radius: 12px; padding: 14px;
+border: 1.5px solid var(–border);
+}
+.toggle-label { font-size: 0.85rem; color: var(–ink); }
 .toggle-switch {
 width: 48px; height: 26px; border-radius: 13px;
 background: var(–border); position: relative;
@@ -281,161 +293,161 @@ transition: left 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 .toggle-switch.on::after { left: 25px; }
 .save-btn {
 width: 100%; padding: 16px; border: none;
-background: linear-gradient(135deg, var(–accent), var(–pink));
-color: #fff; border-radius: 14px; font-size: 0.95rem; font-weight: 700;
+background: var(–accent); color: #fff;
+border-radius: 14px; font-size: 0.95rem; font-weight: 700;
 font-family: ‘Noto Sans TC’, sans-serif;
 cursor: pointer; margin-top: 16px; letter-spacing: 0.05em;
+box-shadow: 0 4px 16px rgba(255,122,0,0.35);
 transition: opacity 0.18s;
 }
 .save-btn:active { opacity: 0.85; }
+.cancel-btn {
+width: 100%; padding: 14px; background: none; border: none;
+color: var(–ink2); font-size: 0.85rem; cursor: pointer;
+margin-top: 6px; font-family: ‘Noto Sans TC’, sans-serif;
+}
 
-/* ── Item detail sheet ── */
-.detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(–border); }
+/* ── Detail ── */
+.detail-row { display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(–border); }
 .detail-row:last-child { border: none; }
 .detail-key { font-size: 0.78rem; color: var(–ink2); }
-.detail-val { font-size: 0.85rem; font-weight: 600; text-align: right; }
+.detail-val { font-size: 0.85rem; font-weight: 600; text-align: right; color: var(–milk); }
 .detail-actions { display: flex; gap: 10px; margin-top: 16px; }
 .detail-actions button { flex: 1; padding: 14px; border-radius: 12px; border: none; font-size: 0.85rem; font-weight: 700; font-family: ‘Noto Sans TC’, sans-serif; cursor: pointer; }
-.btn-edit { background: var(–surface3); color: var(–ink); }
-.btn-del { background: rgba(248,113,113,0.15); color: var(–red); }
+.btn-edit { background: var(–surface2); color: var(–milk); }
+.btn-del { background: rgba(255,107,107,0.15); color: var(–red); }
 
-/* ── Export button ── */
+/* ── Export ── */
 .export-btn {
 width: 100%; padding: 14px; border: 1.5px solid var(–border);
-background: var(–surface2); color: var(–ink2);
+background: var(–surface); color: var(–ink2);
 border-radius: 14px; font-size: 0.85rem; font-weight: 600;
 font-family: ‘Noto Sans TC’, sans-serif;
-cursor: pointer; margin-top: 8px; transition: all 0.18s;
+cursor: pointer; margin-top: 8px;
 display: flex; align-items: center; justify-content: center; gap: 8px;
+transition: background 0.15s;
 }
-.export-btn:active { background: var(–surface3); }
+.export-btn:active { background: var(–surface2); }
 
-/* ── Empty ── */
-.empty-state { text-align: center; padding: 50px 20px; color: var(–ink2); }
-.empty-state .ei { font-size: 3rem; margin-bottom: 12px; }
-.empty-state p { font-size: 0.85rem; }
+/* ── Cat list ── */
+.cat-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.cat-item {
+display: flex; align-items: center; justify-content: space-between;
+background: var(–surface); border-radius: 12px; padding: 13px 14px;
+border: 1px solid var(–border); color: var(–milk);
+}
+.cat-del { background: none; border: none; color: var(–red); font-size: 1rem; cursor: pointer; padding: 4px 8px; }
+.cat-add-row { display: flex; gap: 8px; }
+.cat-add-btn {
+padding: 13px 16px; background: var(–accent); border: none;
+border-radius: 12px; color: #fff; font-size: 0.85rem; font-weight: 700;
+cursor: pointer; white-space: nowrap; font-family: ‘Noto Sans TC’, sans-serif;
+}
+
+/* ── Sec head ── */
+.sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.sec-title { font-size: 0.75rem; font-weight: 700; color: var(–ink2); letter-spacing: 0.1em; text-transform: uppercase; }
 
 /* ── Toast ── */
 .toast {
-position: fixed; bottom: calc(var(–tab-h) + var(–safe-bottom) + 80px);
+position: fixed;
+bottom: calc(var(–tab-h) + var(–safe-bottom) + 80px);
 left: 50%; transform: translateX(-50%) translateY(20px);
-background: var(–surface3); color: var(–ink);
-padding: 10px 20px; border-radius: 20px; font-size: 0.82rem;
+background: var(–surface3); color: var(–milk);
+padding: 10px 22px; border-radius: 20px; font-size: 0.82rem;
 z-index: 300; opacity: 0; transition: all 0.25s; white-space: nowrap;
 border: 1px solid var(–border);
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* ── Cat manager ── */
-.cat-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.cat-item { display: flex; align-items: center; justify-content: space-between; background: var(–surface2); border-radius: 10px; padding: 12px 14px; }
-.cat-del { background: none; border: none; color: var(–red); font-size: 1rem; cursor: pointer; padding: 4px; }
-.cat-add-row { display: flex; gap: 8px; }
-.cat-add-row input { flex: 1; }
-.cat-add-btn { padding: 13px 16px; background: var(–accent); border: none; border-radius: 12px; color: #fff; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: ‘Noto Sans TC’, sans-serif; }
-
+/* ── Info box ── */
+.info-box {
+background: var(–surface); border-radius: 16px; padding: 16px;
+border: 1px solid var(–border); margin-top: 16px;
+font-size: 0.75rem; color: var(–ink2); line-height: 1.9;
+}
 </style>
+
 </head>
 <body>
 
-<!-- Header -->
-
 <div class="app-header">
-  <h1>🛒 購物紀錄</h1>
+  <div class="header-row">
+    <h1><span class="logo">🛒</span>購物紀錄</h1>
+  </div>
   <div class="date-line" id="todayLine"></div>
 </div>
 
-<!-- Scroll Area -->
-
 <div class="scroll-area" id="scrollArea">
 
-  <!-- ── Page: 清單 ── -->
+  <!-- 清單 -->
 
   <div class="page active" id="page-list">
-    <div id="statsGrid" class="stats-grid"></div>
-
-```
-<div class="filter-bar">
-  <input class="search-box" type="search" id="searchInput" placeholder="🔍 搜尋…" oninput="renderList()">
-  <select class="filter-chip" id="filterCat" onchange="renderList()">
-    <option value="">所有分類</option>
-  </select>
-  <select class="filter-chip" id="filterStatus" onchange="renderList()">
-    <option value="">所有狀況</option>
-    <option>良好</option><option>使用中</option><option>老舊</option><option>已損壞</option><option>備用</option>
-  </select>
-  <select class="filter-chip" id="filterRestock" onchange="renderList()">
-    <option value="">補貨</option>
-    <option value="yes">需補貨</option>
-    <option value="no">不需補貨</option>
-  </select>
-</div>
-
-<div id="itemList"></div>
-```
-
+    <div class="stats-grid" id="statsGrid"></div>
+    <div class="filter-bar">
+      <input class="search-box" type="search" id="searchInput" placeholder="🔍 搜尋品名…" oninput="renderList()">
+      <select class="filter-chip" id="filterCat" onchange="renderList()">
+        <option value="">所有分類</option>
+      </select>
+      <select class="filter-chip" id="filterStatus" onchange="renderList()">
+        <option value="">所有狀況</option>
+        <option>良好</option><option>使用中</option><option>老舊</option><option>已損壞</option><option>備用</option>
+      </select>
+      <select class="filter-chip" id="filterRestock" onchange="renderList()">
+        <option value="">補貨</option>
+        <option value="yes">需補貨</option>
+        <option value="no">不需補貨</option>
+      </select>
+    </div>
+    <div id="itemList"></div>
   </div>
 
-  <!-- ── Page: 統計 ── -->
+  <!-- 統計 -->
 
   <div class="page" id="page-stats">
     <div class="month-selector">
       <button class="month-nav" onclick="changeMonth(-1)">‹</button>
       <div style="text-align:center">
         <div class="month-label" id="monthLabel"></div>
-        <div class="month-total">本月共花費 <span id="monthTotal">$0</span></div>
+        <div class="month-total">本月花費 <span id="monthTotal">$0</span></div>
       </div>
       <button class="month-nav" onclick="changeMonth(1)">›</button>
     </div>
-
-```
-<div class="chart-wrap">
-  <div class="chart-title">分類金額佔比</div>
-  <div class="donut-container">
-    <svg width="180" height="180" viewBox="0 0 180 180" id="donutSvg"></svg>
-    <div class="donut-center">
-      <div class="dc-val" id="donutVal">$0</div>
-      <div class="dc-lbl">總花費</div>
+    <div class="chart-wrap">
+      <div class="chart-title">分類金額佔比</div>
+      <div class="donut-container">
+        <svg width="180" height="180" viewBox="0 0 180 180" id="donutSvg"></svg>
+        <div class="donut-center">
+          <div class="dc-val" id="donutVal">$0</div>
+          <div class="dc-lbl">本月總花費</div>
+        </div>
+      </div>
+      <div class="legend" id="chartLegend"></div>
     </div>
-  </div>
-  <div class="legend" id="chartLegend"></div>
-</div>
-
-<div class="sec-head">
-  <span class="sec-title">各分類明細</span>
-</div>
-<div class="cat-breakdown" id="catBreakdown"></div>
-
-<button class="export-btn" onclick="exportCSV()" style="margin-top:16px">⬇ 匯出全部資料 CSV</button>
-```
-
+    <div class="sec-head"><span class="sec-title">各分類明細</span></div>
+    <div class="cat-breakdown" id="catBreakdown"></div>
+    <button class="export-btn" onclick="exportCSV()" style="margin-top:16px">⬇ 匯出全部資料 CSV</button>
   </div>
 
-  <!-- ── Page: 設定 ── -->
+  <!-- 設定 -->
 
   <div class="page" id="page-settings">
     <div class="sec-head"><span class="sec-title">分類管理</span></div>
     <div class="cat-list" id="catList"></div>
     <div class="cat-add-row">
-      <input class="form-group input" id="newCatInput" style="flex:1;padding:13px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:0.9rem;outline:none;" placeholder="新增分類名稱" onkeydown="if(event.key==='Enter')addCat()">
+      <input id="newCatInput" style="flex:1;padding:13px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;color:var(--milk);font-family:'Noto Sans TC',sans-serif;font-size:0.9rem;outline:none;" placeholder="新增分類名稱" onkeydown="if(event.key==='Enter')addCat()">
       <button class="cat-add-btn" onclick="addCat()">新增</button>
     </div>
     <button class="export-btn" onclick="exportCSV()" style="margin-top:20px">⬇ 匯出全部資料 CSV</button>
-    <div style="margin-top:24px;padding:16px;background:var(--surface2);border-radius:16px;border:1px solid var(--border);">
-      <div style="font-size:0.72rem;color:var(--ink2);line-height:1.8;">
-        📱 在 iPhone 上，用 Safari 開啟後點「分享 → 加入主畫面」即可像 App 使用。<br>
-        💾 資料儲存於瀏覽器本地，不會上傳至任何伺服器。
-      </div>
+    <div class="info-box">
+      📱 iPhone：用 Safari 開啟網址後，點底部「分享 📤」→「加入主畫面」，圖示為橘色購物車。<br>
+      💾 資料存在瀏覽器本地，不會上傳至任何伺服器。
     </div>
   </div>
 
-</div><!-- end scroll-area -->
-
-<!-- FAB -->
+</div>
 
 <button class="fab" id="fab" onclick="openAdd()">＋</button>
-
-<!-- Tab Bar -->
 
 <div class="tab-bar">
   <button class="tab-item active" data-page="list" onclick="switchTab('list')">
@@ -492,7 +504,7 @@ border: 1px solid var(–border);
       <textarea id="fNote" rows="2" placeholder="額外說明…"></textarea>
     </div>
     <button class="save-btn" onclick="saveItem()">儲存</button>
-    <button onclick="closeSheet('addSheet')" style="width:100%;padding:14px;background:none;border:none;color:var(--ink2);font-size:0.85rem;cursor:pointer;margin-top:8px;font-family:'Noto Sans TC',sans-serif;">取消</button>
+    <button class="cancel-btn" onclick="closeSheet('addSheet')">取消</button>
   </div>
 </div>
 
@@ -507,49 +519,43 @@ border: 1px solid var(–border);
       <button class="btn-edit" onclick="editFromDetail()">✏ 編輯</button>
       <button class="btn-del" onclick="deleteFromDetail()">🗑 刪除</button>
     </div>
-    <button onclick="closeSheet('detailSheet')" style="width:100%;padding:14px;background:none;border:none;color:var(--ink2);font-size:0.85rem;cursor:pointer;margin-top:4px;font-family:'Noto Sans TC',sans-serif;">關閉</button>
+    <button class="cancel-btn" onclick="closeSheet('detailSheet')">關閉</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Constants & State ──
 const DEFAULT_CATS = ['食品飲料','日用品','電器3C','衣物配件','清潔用品','文具辦公','保健美妝','其他'];
 const CAT_ICONS = {'食品飲料':'🍎','日用品':'🧴','電器3C':'💻','衣物配件':'👗','清潔用品':'🧹','文具辦公':'📝','保健美妝':'💊','其他':'📦'};
-const PALETTE = ['#7c6cf8','#22d3ee','#4ade80','#fbbf24','#f472b6','#fb923c','#f87171','#a78bfa','#34d399','#60a5fa'];
+const PALETTE = ['#ff7a00','#4ecdc4','#4ecb8d','#ffba44','#ff8fa3','#a78bfa','#ff6b6b','#60a5fa','#34d399','#fb923c'];
 
-let data = JSON.parse(localStorage.getItem('shopData2') || '[]');
-let cats = JSON.parse(localStorage.getItem('shopCats2') || JSON.stringify(DEFAULT_CATS));
+let data = JSON.parse(localStorage.getItem('shopData3') || '[]');
+let cats = JSON.parse(localStorage.getItem('shopCats3') || JSON.stringify(DEFAULT_CATS));
 let editId = null;
 let detailId = null;
-let curMonth = new Date();
-curMonth.setDate(1);
+let curMonth = new Date(); curMonth.setDate(1);
 
 function persist() {
-  localStorage.setItem('shopData2', JSON.stringify(data));
-  localStorage.setItem('shopCats2', JSON.stringify(cats));
+  localStorage.setItem('shopData3', JSON.stringify(data));
+  localStorage.setItem('shopCats3', JSON.stringify(cats));
 }
 
-// ── Header date ──
-document.getElementById('todayLine').textContent = new Date().toLocaleDateString('zh-TW', {year:'numeric',month:'long',day:'numeric',weekday:'long'});
+document.getElementById('todayLine').textContent = new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 
-// ── Tab switching ──
 function switchTab(tab) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-  document.getElementById('page-' + tab).classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
   document.querySelector(`[data-page="${tab}"]`).classList.add('active');
   document.getElementById('scrollArea').scrollTop = 0;
-  document.getElementById('fab').style.display = tab === 'list' ? 'flex' : 'none';
-  if (tab === 'stats') renderStats();
-  if (tab === 'settings') renderCatList();
+  document.getElementById('fab').style.display = tab==='list'?'flex':'none';
+  if(tab==='stats') renderStats();
+  if(tab==='settings') renderCatList();
 }
 
-// ── List Page ──
 function renderList() {
-  // stats
-  const total = data.reduce((s,d) => s+Number(d.price), 0);
+  const total = data.reduce((s,d)=>s+Number(d.price),0);
   const restock = data.filter(d=>d.restock).length;
   document.getElementById('statsGrid').innerHTML = `
     <div class="stat-card c1"><div class="s-label">品項總數</div><div class="s-val">${data.length}</div><div class="s-sub">件</div></div>
@@ -557,31 +563,25 @@ function renderList() {
     <div class="stat-card c3"><div class="s-label">需補貨</div><div class="s-val">${restock}</div><div class="s-sub">項</div></div>
     <div class="stat-card c4"><div class="s-label">分類數</div><div class="s-val">${new Set(data.map(d=>d.cat)).size}</div><div class="s-sub">類</div></div>
   `;
-  // update cat filter
   const catSel = document.getElementById('filterCat');
   const cv = catSel.value;
-  catSel.innerHTML = '<option value="">所有分類</option>' + cats.map(c=>`<option${c===cv?' selected':''}>${c}</option>`).join('');
-  // filter
-  const q = (document.getElementById('searchInput').value||'').toLowerCase();
-  const cat = catSel.value;
-  const status = document.getElementById('filterStatus').value;
-  const restock2 = document.getElementById('filterRestock').value;
-  let rows = data.filter(d => {
-    if (q && !d.name.toLowerCase().includes(q) && !(d.note||'').toLowerCase().includes(q)) return false;
-    if (cat && d.cat !== cat) return false;
-    if (status && d.status !== status) return false;
-    if (restock2 === 'yes' && !d.restock) return false;
-    if (restock2 === 'no' && d.restock) return false;
+  catSel.innerHTML = '<option value="">所有分類</option>'+cats.map(c=>`<option${c===cv?' selected':''}>${c}</option>`).join('');
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  const cat=catSel.value;
+  const status=document.getElementById('filterStatus').value;
+  const restock2=document.getElementById('filterRestock').value;
+  let rows=data.filter(d=>{
+    if(q&&!d.name.toLowerCase().includes(q)&&!(d.note||'').toLowerCase().includes(q))return false;
+    if(cat&&d.cat!==cat)return false;
+    if(status&&d.status!==status)return false;
+    if(restock2==='yes'&&!d.restock)return false;
+    if(restock2==='no'&&d.restock)return false;
     return true;
   });
-  rows.sort((a,b) => b.date.localeCompare(a.date));
-
-  const list = document.getElementById('itemList');
-  if (!rows.length) {
-    list.innerHTML = `<div class="empty-state"><div class="ei">📦</div><p>沒有符合的品項</p></div>`;
-    return;
-  }
-  list.innerHTML = rows.map(d => `
+  rows.sort((a,b)=>b.date.localeCompare(a.date));
+  const list=document.getElementById('itemList');
+  if(!rows.length){list.innerHTML=`<div class="empty-state"><div class="ei">📦</div><p>沒有符合的品項</p></div>`;return;}
+  list.innerHTML=rows.map(d=>`
     <div class="item-card" onclick="openDetail('${d.id}')">
       <div class="item-icon">${CAT_ICONS[d.cat]||'📦'}</div>
       <div class="item-body">
@@ -589,7 +589,7 @@ function renderList() {
         <div class="item-meta">
           <span class="badge b-${d.status}">${d.status}</span>
           <span>${esc(d.cat)}</span>
-          ${d.restock ? '<span><span class="restock-dot"></span>需補貨</span>' : ''}
+          ${d.restock?'<span><span class="restock-dot"></span>需補貨</span>':''}
         </div>
       </div>
       <div class="item-right">
@@ -600,147 +600,89 @@ function renderList() {
   `).join('');
 }
 
-// ── Stats Page ──
-function changeMonth(delta) {
-  curMonth.setMonth(curMonth.getMonth() + delta);
-  renderStats();
-}
+function changeMonth(delta){curMonth.setMonth(curMonth.getMonth()+delta);renderStats();}
 
-function renderStats() {
-  const y = curMonth.getFullYear();
-  const m = curMonth.getMonth();
-  document.getElementById('monthLabel').textContent = `${y} 年 ${m+1} 月`;
-
-  const monthData = data.filter(d => {
-    const dt = new Date(d.date);
-    return dt.getFullYear() === y && dt.getMonth() === m;
-  });
-  const total = monthData.reduce((s,d) => s+Number(d.price), 0);
-  document.getElementById('monthTotal').textContent = `$${total.toLocaleString()}`;
-  document.getElementById('donutVal').textContent = `$${total.toLocaleString()}`;
-
-  // group by cat
-  const grouped = {};
-  monthData.forEach(d => {
-    grouped[d.cat] = (grouped[d.cat]||0) + Number(d.price);
-  });
-  const entries = Object.entries(grouped).sort((a,b)=>b[1]-a[1]);
-
-  // donut
-  drawDonut(entries, total);
-
-  // cat breakdown
-  const bd = document.getElementById('catBreakdown');
-  if (!entries.length) {
-    bd.innerHTML = `<div class="empty-state"><div class="ei">📊</div><p>本月尚無消費紀錄</p></div>`;
-    return;
-  }
-  bd.innerHTML = entries.map(([cat, amt], i) => {
-    const pct = total ? Math.round(amt/total*100) : 0;
-    return `
-      <div class="cat-row">
-        <div class="cat-row-top">
-          <span class="cat-row-name">${CAT_ICONS[cat]||'📦'} ${esc(cat)}</span>
-          <span class="cat-row-amt">$${amt.toLocaleString()}</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${PALETTE[i%PALETTE.length]}"></div></div>
-        <div class="cat-row-pct">${pct}%</div>
-      </div>
-    `;
+function renderStats(){
+  const y=curMonth.getFullYear(),m=curMonth.getMonth();
+  document.getElementById('monthLabel').textContent=`${y} 年 ${m+1} 月`;
+  const md=data.filter(d=>{const dt=new Date(d.date);return dt.getFullYear()===y&&dt.getMonth()===m;});
+  const total=md.reduce((s,d)=>s+Number(d.price),0);
+  document.getElementById('monthTotal').textContent=`$${total.toLocaleString()}`;
+  document.getElementById('donutVal').textContent=`$${total.toLocaleString()}`;
+  const grouped={};
+  md.forEach(d=>{grouped[d.cat]=(grouped[d.cat]||0)+Number(d.price);});
+  const entries=Object.entries(grouped).sort((a,b)=>b[1]-a[1]);
+  drawDonut(entries,total);
+  const bd=document.getElementById('catBreakdown');
+  if(!entries.length){bd.innerHTML=`<div class="empty-state"><div class="ei">📊</div><p>本月尚無消費紀錄</p></div>`;return;}
+  bd.innerHTML=entries.map(([cat,amt],i)=>{
+    const pct=total?Math.round(amt/total*100):0;
+    return`<div class="cat-row">
+      <div class="cat-row-top"><span class="cat-row-name">${CAT_ICONS[cat]||'📦'} ${esc(cat)}</span><span class="cat-row-amt">$${amt.toLocaleString()}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${PALETTE[i%PALETTE.length]}"></div></div>
+      <div class="cat-row-pct">${pct}%</div>
+    </div>`;
   }).join('');
 }
 
-function drawDonut(entries, total) {
-  const svg = document.getElementById('donutSvg');
-  const legend = document.getElementById('chartLegend');
-  const R = 90, r = 58, cx = 90, cy = 90;
-  const circ = 2 * Math.PI * r;
-
-  if (!total || !entries.length) {
-    svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--border)" stroke-width="18"/>`;
-    legend.innerHTML = '<div style="text-align:center;color:var(--ink2);font-size:0.8rem;padding:10px">本月無資料</div>';
+function drawDonut(entries,total){
+  const svg=document.getElementById('donutSvg');
+  const legend=document.getElementById('chartLegend');
+  const r=58,cx=90,cy=90,circ=2*Math.PI*r;
+  if(!total||!entries.length){
+    svg.innerHTML=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface3)" stroke-width="20"/>`;
+    legend.innerHTML='<div style="text-align:center;color:var(--ink2);font-size:0.8rem;padding:10px">本月無資料</div>';
     return;
   }
-
-  let offset = 0;
-  let paths = '';
-  let legendHTML = '';
-
-  entries.forEach(([cat, amt], i) => {
-    const pct = amt / total;
-    const dash = pct * circ;
-    const gap = circ - dash;
-    const color = PALETTE[i % PALETTE.length];
-    paths += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="20" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${-offset}" stroke-linecap="round"/>`;
-    offset += dash;
-    const pctInt = Math.round(pct * 100);
-    legendHTML += `
-      <div class="legend-item">
-        <div class="legend-dot" style="background:${color}"></div>
-        <span class="legend-name">${CAT_ICONS[cat]||'📦'} ${esc(cat)}</span>
-        <span class="legend-pct">${pctInt}%</span>
-        <span class="legend-amt">$${amt.toLocaleString()}</span>
-      </div>`;
+  let offset=0,paths='',legendHTML='';
+  entries.forEach(([cat,amt],i)=>{
+    const pct=amt/total,dash=pct*circ,gap=circ-dash,color=PALETTE[i%PALETTE.length];
+    paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="20" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${-offset}" stroke-linecap="round"/>`;
+    offset+=dash;
+    legendHTML+=`<div class="legend-item"><div class="legend-dot" style="background:${color}"></div><span class="legend-name">${CAT_ICONS[cat]||'📦'} ${esc(cat)}</span><span class="legend-pct">${Math.round(pct*100)}%</span><span class="legend-amt">$${amt.toLocaleString()}</span></div>`;
   });
-
-  svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface3)" stroke-width="20"/>` + paths;
-  legend.innerHTML = legendHTML;
+  svg.innerHTML=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface3)" stroke-width="20"/>` +paths;
+  legend.innerHTML=legendHTML;
 }
 
-// ── Add / Edit ──
-function openAdd() {
-  editId = null;
-  document.getElementById('sheetTitle').textContent = '新增品項';
-  document.getElementById('fName').value = '';
-  document.getElementById('fDate').value = new Date().toISOString().slice(0,10);
-  document.getElementById('fPrice').value = '';
-  document.getElementById('fStatus').value = '使用中';
-  document.getElementById('fNote').value = '';
+function openAdd(){
+  editId=null;
+  document.getElementById('sheetTitle').textContent='新增品項';
+  document.getElementById('fName').value='';
+  document.getElementById('fDate').value=new Date().toISOString().slice(0,10);
+  document.getElementById('fPrice').value='';
+  document.getElementById('fStatus').value='使用中';
+  document.getElementById('fNote').value='';
   document.getElementById('fRestock').classList.remove('on');
-  updateFCat(null);
+  document.getElementById('fCat').innerHTML=cats.map(c=>`<option>${c}</option>`).join('');
   openSheet('addSheet');
 }
 
-function updateFCat(selected) {
-  document.getElementById('fCat').innerHTML = cats.map(c=>`<option value="${c}"${c===selected?' selected':''}>${c}</option>`).join('');
-}
-
-function saveItem() {
-  const name = document.getElementById('fName').value.trim();
-  const date = document.getElementById('fDate').value;
-  const price = document.getElementById('fPrice').value;
-  if (!name || !date || price === '') { toast('請填寫品名、日期、價格'); return; }
-  const item = {
-    id: editId || Date.now().toString(36) + Math.random().toString(36).slice(2,5),
-    name,
-    cat: document.getElementById('fCat').value,
-    date,
-    price: Number(price),
-    status: document.getElementById('fStatus').value,
-    restock: document.getElementById('fRestock').classList.contains('on'),
-    note: document.getElementById('fNote').value.trim()
+function saveItem(){
+  const name=document.getElementById('fName').value.trim();
+  const date=document.getElementById('fDate').value;
+  const price=document.getElementById('fPrice').value;
+  if(!name||!date||price===''){toast('請填寫品名、日期、價格');return;}
+  const item={
+    id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,5),
+    name,cat:document.getElementById('fCat').value,date,
+    price:Number(price),status:document.getElementById('fStatus').value,
+    restock:document.getElementById('fRestock').classList.contains('on'),
+    note:document.getElementById('fNote').value.trim()
   };
-  if (editId) {
-    const idx = data.findIndex(d=>d.id===editId);
-    data[idx] = item;
-    toast('已更新 ✓');
-  } else {
-    data.unshift(item);
-    toast('已新增 ✓');
-  }
-  persist(); closeSheet('addSheet'); renderList();
+  if(editId){data[data.findIndex(d=>d.id===editId)]=item;toast('已更新 ✓');}
+  else{data.unshift(item);toast('已新增 ✓');}
+  persist();closeSheet('addSheet');renderList();
 }
 
-// ── Detail ──
-function openDetail(id) {
-  const d = data.find(x=>x.id===id);
-  if (!d) return;
-  detailId = id;
-  document.getElementById('detailName').textContent = (CAT_ICONS[d.cat]||'📦') + ' ' + d.name;
-  document.getElementById('detailBody').innerHTML = `
+function openDetail(id){
+  const d=data.find(x=>x.id===id);if(!d)return;
+  detailId=id;
+  document.getElementById('detailName').textContent=(CAT_ICONS[d.cat]||'📦')+' '+d.name;
+  document.getElementById('detailBody').innerHTML=`
     <div class="detail-row"><span class="detail-key">分類</span><span class="detail-val">${esc(d.cat)}</span></div>
     <div class="detail-row"><span class="detail-key">購買日期</span><span class="detail-val">${d.date}</span></div>
-    <div class="detail-row"><span class="detail-key">價格</span><span class="detail-val" style="color:var(--gold)">$${Number(d.price).toLocaleString()}</span></div>
+    <div class="detail-row"><span class="detail-key">價格</span><span class="detail-val" style="color:var(--accent2)">$${Number(d.price).toLocaleString()}</span></div>
     <div class="detail-row"><span class="detail-key">使用狀況</span><span class="detail-val"><span class="badge b-${d.status}">${d.status}</span></span></div>
     <div class="detail-row"><span class="detail-key">需要補貨</span><span class="detail-val">${d.restock?'<span style="color:var(--red)">🔴 需補貨</span>':'—'}</span></div>
     <div class="detail-row"><span class="detail-key">備註</span><span class="detail-val" style="max-width:200px;word-break:break-all">${esc(d.note||'—')}</span></div>
@@ -748,89 +690,74 @@ function openDetail(id) {
   openSheet('detailSheet');
 }
 
-function editFromDetail() {
-  const d = data.find(x=>x.id===detailId);
-  if (!d) return;
-  closeSheet('detailSheet');
-  editId = detailId;
-  document.getElementById('sheetTitle').textContent = '編輯品項';
-  document.getElementById('fName').value = d.name;
-  document.getElementById('fDate').value = d.date;
-  document.getElementById('fPrice').value = d.price;
-  document.getElementById('fStatus').value = d.status;
-  document.getElementById('fNote').value = d.note||'';
-  document.getElementById('fRestock').classList.toggle('on', d.restock);
-  updateFCat(d.cat);
-  setTimeout(() => openSheet('addSheet'), 100);
+function editFromDetail(){
+  const d=data.find(x=>x.id===detailId);if(!d)return;
+  closeSheet('detailSheet');editId=detailId;
+  document.getElementById('sheetTitle').textContent='編輯品項';
+  document.getElementById('fName').value=d.name;
+  document.getElementById('fDate').value=d.date;
+  document.getElementById('fPrice').value=d.price;
+  document.getElementById('fStatus').value=d.status;
+  document.getElementById('fNote').value=d.note||'';
+  document.getElementById('fRestock').classList.toggle('on',d.restock);
+  document.getElementById('fCat').innerHTML=cats.map(c=>`<option${c===d.cat?' selected':''}>${c}</option>`).join('');
+  setTimeout(()=>openSheet('addSheet'),100);
 }
 
-function deleteFromDetail() {
-  if (!confirm('確定刪除？')) return;
-  data = data.filter(d=>d.id!==detailId);
-  persist(); closeSheet('detailSheet'); renderList(); toast('已刪除');
+function deleteFromDetail(){
+  if(!confirm('確定刪除？'))return;
+  data=data.filter(d=>d.id!==detailId);
+  persist();closeSheet('detailSheet');renderList();toast('已刪除');
 }
 
-// ── Settings ──
-function renderCatList() {
-  document.getElementById('catList').innerHTML = cats.map((c,i) => {
-    const isDef = DEFAULT_CATS.includes(c);
-    return `<div class="cat-item">
-      <span>${CAT_ICONS[c]||'📦'} ${esc(c)}</span>
-      ${!isDef ? `<button class="cat-del" onclick="removeCat(${i})">✕</button>` : '<span style="font-size:0.65rem;color:var(--ink3)">預設</span>'}
-    </div>`;
+function renderCatList(){
+  document.getElementById('catList').innerHTML=cats.map((c,i)=>{
+    const isDef=DEFAULT_CATS.includes(c);
+    return`<div class="cat-item"><span>${CAT_ICONS[c]||'📦'} ${esc(c)}</span>${!isDef?`<button class="cat-del" onclick="removeCat(${i})">✕</button>`:'<span style="font-size:0.65rem;color:var(--ink3)">預設</span>'}</div>`;
   }).join('');
 }
 
-function addCat() {
-  const v = document.getElementById('newCatInput').value.trim();
-  if (!v) return;
-  if (cats.includes(v)) { toast('分類已存在'); return; }
-  cats.push(v); persist(); renderCatList(); document.getElementById('newCatInput').value = '';
-  toast('已新增分類');
+function addCat(){
+  const v=document.getElementById('newCatInput').value.trim();
+  if(!v)return;
+  if(cats.includes(v)){toast('分類已存在');return;}
+  cats.push(v);persist();renderCatList();document.getElementById('newCatInput').value='';toast('已新增分類');
 }
 
-function removeCat(i) {
-  const name = cats[i];
-  if (data.some(d=>d.cat===name)) { toast('此分類有資料，無法刪除'); return; }
-  cats.splice(i,1); persist(); renderCatList(); toast('已刪除分類');
+function removeCat(i){
+  if(data.some(d=>d.cat===cats[i])){toast('此分類有資料，無法刪除');return;}
+  cats.splice(i,1);persist();renderCatList();
 }
 
-// ── Export ──
-function exportCSV() {
-  if (!data.length) { toast('尚無資料'); return; }
-  const rows = [['品名','分類','購買日期','價格','使用狀況','需要補貨','備註']];
-  data.forEach(d => rows.push([d.name,d.cat,d.date,d.price,d.status,d.restock?'是':'否',d.note||'']));
-  const csv = '\uFEFF' + rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = `購物紀錄_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-  toast('已匯出 CSV ✓');
+function exportCSV(){
+  if(!data.length){toast('尚無資料');return;}
+  const rows=[['品名','分類','購買日期','價格','使用狀況','需要補貨','備註']];
+  data.forEach(d=>rows.push([d.name,d.cat,d.date,d.price,d.status,d.restock?'是':'否',d.note||'']));
+  const csv='\uFEFF'+rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download=`購物紀錄_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();toast('已匯出 CSV ✓');
 }
 
-// ── Sheet helpers ──
-function openSheet(id) { document.getElementById(id).classList.add('open'); }
-function closeSheet(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.sheet-bg').forEach(bg => {
-  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); });
+function openSheet(id){document.getElementById(id).classList.add('open');}
+function closeSheet(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.sheet-bg').forEach(bg=>{
+  bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('open');});
 });
 
-// ── Toast ──
 let toastTimer;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2000);
 }
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-// ── Sample data ──
-if (!data.length) {
-  data = [
+if(!data.length){
+  data=[
     {id:'s1',name:'洗碗精',cat:'清潔用品',date:'2026-03-10',price:89,status:'使用中',restock:true,note:'快用完了'},
     {id:'s2',name:'無線滑鼠',cat:'電器3C',date:'2026-02-15',price:650,status:'良好',restock:false,note:'Logitech M350'},
     {id:'s3',name:'燕麥片',cat:'食品飲料',date:'2026-03-20',price:120,status:'使用中',restock:false,note:'桂格大燕麥'},
@@ -841,7 +768,6 @@ if (!data.length) {
   ];
   persist();
 }
-
 renderList();
 </script>
 
